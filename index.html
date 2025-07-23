@@ -22,6 +22,26 @@
 }
 
 /* لون خاص لـ Date de fin */
+
+
+/* تأثير ظهور خفيف للصفوف */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-row {
+  animation: fadeSlideUp 0.5s ease forwards;
+}
+
+
+
 #endDate {
   background-color: #fff3e0; /* برتقالي فاتح */
   color: #e65100;            /* برتقالي غامق للنص */
@@ -173,6 +193,11 @@
         display: none !important;
       }
 
+      #backToTop {
+        display: none !important;
+      }
+      
+      
       #customNote {
         display: block !important;
         border: none;
@@ -269,8 +294,7 @@
     <div class="logo-container">
       <img src="Logo_of_the_Bank_of_Algeria.png" alt="Logo" class="logo">
     </div>
-	
-	
+
     <h2 id="title">Tableau de Paiement des Frais de Change</h2>
 
     <label id="labelStart">Date de début:</label>
@@ -307,6 +331,9 @@
       <tbody></tbody>
     </table>
   </div>
+
+    <button id="backToTop" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">⬆️</button>
+
 
   <script>
 	
@@ -461,6 +488,7 @@ window.onload = function () {
       );
       window.print();
     }
+    
   </script>
 </body>
 </html>
