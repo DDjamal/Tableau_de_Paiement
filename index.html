@@ -440,6 +440,9 @@ window.onload = function () {
           tbody.appendChild(row);
         }
       }
+        // ⬇️ هذا هو السطر الذي يضيف التمرير إلى الجدول
+  document.getElementById("resultTable").scrollIntoView({ behavior: "smooth" });
+
     }
 
     function clearTable() {
