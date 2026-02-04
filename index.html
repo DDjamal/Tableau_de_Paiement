@@ -3,29 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محول الأنظمة العددية المتقدم</title>
+<title>محول الأنظمة العددية للهاتف</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
 <style>
   body {
     font-family: 'Cairo', sans-serif;
-    background: #1e1e2f;
+    background: #121212;
     color: #fff;
     margin: 0;
-    padding: 20px;
+    padding: 10px;
   }
-  h1 { text-align: center; color: #00e0ff; }
-  .container { max-width: 600px; margin: 0 auto; background: #2a2a40; padding: 20px; border-radius: 15px; box-shadow: 0 0 20px #000; }
-  label, select, input, button { display: block; width: 100%; margin: 10px 0; font-size: 16px; }
-  input, select { padding: 10px; border-radius: 8px; border: none; outline: none; }
-  button { background: #00e0ff; color: #000; font-weight: bold; cursor: pointer; padding: 12px; border-radius: 10px; border: none; transition: 0.3s; }
+  h1 { text-align: center; color: #00e0ff; font-size: 24px; margin-bottom: 10px; }
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: #1f1f2f;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #000;
+  }
+  label, select, input, button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  input, select {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+  }
+  button {
+    background: #00e0ff;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    transition: 0.3s;
+  }
   button:hover { background: #00c0cc; }
-  .result { margin-top: 20px; background: #161630; padding: 15px; border-radius: 10px; }
-  pre { background: #0f0f1f; padding: 10px; border-radius: 8px; overflow-x: auto; }
+  .result {
+    margin-top: 15px;
+    background: #161630;
+    padding: 15px;
+    border-radius: 12px;
+  }
+  pre {
+    background: #0f0f1f;
+    padding: 10px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 14px;
+  }
+  @media(max-width: 500px){
+    h1 { font-size: 20px; }
+    button, input, select { font-size: 14px; padding: 10px; }
+  }
 </style>
 </head>
 <body>
 
-<h1>محول الأنظمة العددية المتقدم</h1>
+<h1>محول الأنظمة العددية للهاتف</h1>
 <div class="container">
   <label>أدخل الرقم:</label>
   <input type="text" id="inputNumber" placeholder="مثال: 2026">
@@ -73,12 +114,13 @@ function convert() {
     return;
   }
 
-  // تحويل الرقم إلى النظام المطلوب
   let output = decimal.toString(outputBase).toUpperCase();
-
-  // توليد خطوات الشرح
   let steps = [];
-  if(outputBase !== 10){ // القسمة على الأساس
+
+  // شرح مفصل للتحويل
+  if(outputBase !== 10){
+    steps.push(`🔹 نريد تحويل الرقم ${decimal} إلى النظام ذو الأساس ${outputBase}`);
+    steps.push('🔹 نقوم بالقسمة المتكررة على الأساس وجمع البواقي من الأسفل للأعلى:');
     let temp = decimal;
     while(temp > 0){
       let remainder = temp % outputBase;
@@ -86,19 +128,22 @@ function convert() {
       steps.push(`${temp} ÷ ${outputBase} = ${Math.floor(temp/outputBase)} الباقي = ${remDisplay}`);
       temp = Math.floor(temp/outputBase);
     }
-    steps = steps.reverse();
-  } else { // إذا التحويل إلى Decimal، التوسيع حسب القوى
+    steps.push(`🔹 نقرأ البواقي من الأسفل للأعلى لنحصل على الرقم النهائي: ${output}`);
+  } else {
+    steps.push(`🔹 نريد تحويل الرقم ${numStr} من النظام ${inputBase} إلى Decimal`);
+    steps.push('🔹 نستخدم التوسيع حسب القوى:');
     let digits = numStr.split('').reverse();
-    let sumSteps = digits.map((d,i) => {
+    digits.forEach((d,i)=>{
       let val = parseInt(d, inputBase);
-      return `${val} × ${inputBase}^${i} = ${val*Math.pow(inputBase,i)}`;
+      steps.push(`${val} × ${inputBase}^${i} = ${val*Math.pow(inputBase,i)}`);
     });
-    steps = sumSteps;
+    let sum = digits.reduce((acc,d,i)=> acc + parseInt(d)*Math.pow(inputBase,i),0);
+    steps.push(`🔹 نجمع النتائج: ${sum} ✅`);
   }
 
   resultDiv.innerHTML = `
-    <b>النتيجة:</b> ${output}<br><br>
-    <b>خطوات التحويل:</b>
+    <b>النتيجة النهائية:</b> ${output}<br><br>
+    <b>شرح العملية خطوة بخطوة:</b>
     <pre>${steps.join('\n')}</pre>
   `;
 }
