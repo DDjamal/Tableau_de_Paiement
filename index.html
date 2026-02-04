@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محول الأنظمة العددية - شرح بسيط</title>
+<title>محول الأنظمة العددية - شرح منظم وواضح</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
 <style>
 body {
@@ -57,6 +57,7 @@ pre {
     border-radius: 10px;
     overflow-x: auto;
     font-size: 14px;
+    line-height: 1.6;
 }
 @media(max-width: 500px){
     h1 { font-size: 20px; }
@@ -66,7 +67,7 @@ pre {
 </head>
 <body>
 
-<h1>محول الأنظمة العددية - شرح بسيط</h1>
+<h1>محول الأنظمة العددية - شرح واضح</h1>
 <div class="container">
 <label>أدخل الرقم:</label>
 <input type="text" id="inputNumber" placeholder="مثال: 2026">
@@ -104,7 +105,7 @@ function convert() {
         return;
     }
 
-    // تحويل الرقم إلى عشري
+    // تحويل الرقم إلى عشري أولاً
     let decimal;
     try {
         decimal = parseInt(numStr, inputBase);
@@ -117,8 +118,8 @@ function convert() {
     let output = decimal.toString(outputBase).toUpperCase();
     let steps = [];
 
-    // إذا التحويل إلى Decimal
     if(outputBase === 10){
+        // تحويل لأي نظام إلى Decimal
         steps.push(`🔹 تحويل الرقم ${numStr} من النظام ${inputBase} إلى Decimal`);
         steps.push('🔹 التوسيع حسب القوى:');
         let digits = numStr.split('').reverse();
@@ -129,22 +130,25 @@ function convert() {
         let sum = digits.reduce((acc,d,i)=> acc + parseInt(d)*Math.pow(inputBase,i),0);
         steps.push(`🔹 مجموع القيم = ${sum} ✅`);
     } else {
-        steps.push(`🔹 تحويل الرقم ${decimal} من Decimal إلى النظام الأساسي ${outputBase}`);
-        // تحديد أكبر قوة من النظام أقل أو تساوي الرقم
-        let pow = 1;
-        while(pow * outputBase <= decimal) pow *= outputBase;
+        // تحويل Decimal لأي نظام آخر مع شرح منظم للباقي
+        steps.push(`🔹 تحويل الرقم ${decimal} من Decimal إلى النظام ذو الأساس ${outputBase}`);
+        steps.push('🔹 القسمة المتكررة على الأساس مع توضيح الباقي (إذا ≥ 10 يتحول لحرف Hex):');
 
         let temp = decimal;
-        steps.push(`🔹 أكبر قوة من ${outputBase} ≤ ${decimal} هي ${pow}`);
-        while(pow >= 1){
-            let digit = Math.floor(temp / pow);
-            let remainder = temp - digit * pow;
-            let displayDigit = digit > 9 ? String.fromCharCode(55 + digit) : digit;
-            steps.push(`🔹 ${digit} × ${pow} = ${digit*pow}, الباقي = ${remainder} → الرقم في خانة ${pow} = ${displayDigit}`);
-            temp = remainder;
-            pow = Math.floor(pow / outputBase);
+        let remainders = [];
+
+        while(temp > 0){
+            let digit = Math.floor(temp / outputBase);
+            let remainder = temp % outputBase;
+            let displayDigit = remainder > 9 ? String.fromCharCode(55 + remainder) : remainder;
+
+            steps.push(`${temp} ÷ ${outputBase} = ${digit} (نتيجة القسمة)`);
+            steps.push(`الباقي = ${remainder} → ${displayDigit}`);
+            remainders.push(displayDigit);
+            temp = digit;
         }
-        steps.push(`🔹 النتيجة النهائية = ${output} ✅`);
+
+        steps.push('🔹 نقرأ البواقي من الأسفل للأعلى لنحصل على الرقم النهائي: ' + remainders.reverse().join('') + ' ✅');
     }
 
     resultDiv.innerHTML = `
