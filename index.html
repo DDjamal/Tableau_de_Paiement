@@ -1,494 +1,108 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>Tableau de Voyage</title>
-  <style>
-    body {
-      font-family: 'Cairo', sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 20px;
-    }
-    
-    /* لون خاص لـ Date de début */
-#startDate {
-  background-color: #e8f5e9; /* أخضر فاتح جدًا */
-  color: #1b5e20;            /* أخضر غامق للنص */
-  font-weight: bold;
-  padding: 5px;
-  border-radius: 6px;
-  border: 1px solid #81c784;
-}
-
-/* لون خاص لـ Date de fin */
-
-
-/* تأثير ظهور خفيف للصفوف */
-@keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>محول الأنظمة العددية المتقدم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: #1e1e2f;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-row {
-  animation: fadeSlideUp 0.5s ease forwards;
-}
-
-
-
-#endDate {
-  background-color: #fff3e0; /* برتقالي فاتح */
-  color: #e65100;            /* برتقالي غامق للنص */
-  font-weight: bold;
-  padding: 5px;
-  border-radius: 6px;
-  border: 1px solid #ffb74d;
-}
-
-
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    .logo-container {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    
-      input#workingDays {
-      transition: background-color 2s ease;
-    }
-
-
-    .logo {
-      max-width: 280px;
-      height: auto;
-      display: inline-block;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    label, input {
-      display: block;
-      width: 50%;
-      margin: 1px 0;
-      font-size: 28px;
-    }
-
-    textarea {
-      width: 100%;
-      font-size: 16px;
-      margin: 10px 0;
-      padding: 30px 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      resize: vertical;
-      text-align: center;
-      box-sizing: border-box;
-      font-family: 'Tajawal', 'Arial', sans-serif;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-	
-	#resultTable thead th {
-		background-color: #fff9c4; /* أصفر فاتح */
-		color: #000;               /* كتابة سوداء */
-	}
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-   button {
-      margin-top: 15px;
-     padding: 10px 20px;
-     background: #0066cc;
-     color: white;
-     border: none;
-     border-radius: 8px;
-     cursor: pointer;
-     font-size: 35px;
-     font-family: 'Cairo', sans-serif; /* الخط الافتراضي */
-   }
-
-    button:hover {
-      background-color: #0051a3;
-    }
-
-    .lang-switch {
-      text-align: right;
-      margin-bottom: 10px;
-    }
-
-    .warning {
-      background-color: #fff3cd;
-      color: #856404;
-      padding: 10px;
-      border-radius: 6px;
-      margin-top: 10px;
-      font-size: 28px; /* ⬅️ حجم الخط المضاف */
-
-    }
-
-    .button-row {
-     display: flex;
-    justify-content: center;
-    flex-wrap: nowrap;
-    gap: 10px;
-    align-content: center;
-    align-items: center;
-    }
-
-    @media print {
-      @page {
-        size: A4 landscape;
-        margin: 10mm;
-      }
-
-      body {
-        background: white;
-        color: black;
-        margin: 0;
-        padding: 0;
-      }
-
-      .container {
-        box-shadow: none;
-        padding: 0;
-        margin: 0;
-        border-radius: 0;
-        max-width: 100%;
-      }
-
-      .lang-switch,
-      .warning,
-      .button-row,
-      input,
-      label,
-      #printNote {
-        display: none !important;
-      }
-
-      #backToTop {
-        display: none !important;
-      }
-      
-      
-      #customNote {
-        display: block !important;
-        border: none;
-        font-size: 16px;
-        width: 100%;
-        height: auto;
-        resize: none;
-        text-align: center;
-        padding: 30px 10px;
-      }
-
-      .logo-container {
-        display: block !important;
-        text-align: center;
-        margin-bottom: 10px;
-      }
-
-      .logo {
-        max-width: 150px;
-        height: auto;
-      }
-
-      table {
-        page-break-inside: avoid;
-      }
-
-      h2 {
-        margin: 0 0 10px 0;
-        text-align: center;
-      }
-    }
-
-@media print {
-  .logo-container,
-  .logo,
-  #customNote,
-  #resultTable {
-    page-break-before: avoid;
-    page-break-after: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-  
- /* إخفاء عمود التحميل أو الزر عند الطباعة */
-  .download-column,
-  .download-button {
-    display: none !important;
-  }
-
-  /* مسافة 0.8 سنتيمتر بين Remarques والجدول */
-  #customNote {
-    margin-bottom: 8.8cm !important;
-    padding-bottom: 0 !important;
-  }
-
-  #resultTable {
-    margin-top: 0 !important;
-  }
-
-  .logo {
-    max-height: 100px !important;
-    height: auto !important;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .logo-container {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  #customNote {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  #resultTable {
-    margin-top: 0 !important;
-  }
-}
-
-
-  </style>
+  h1 { text-align: center; color: #00e0ff; }
+  .container { max-width: 600px; margin: 0 auto; background: #2a2a40; padding: 20px; border-radius: 15px; box-shadow: 0 0 20px #000; }
+  label, select, input, button { display: block; width: 100%; margin: 10px 0; font-size: 16px; }
+  input, select { padding: 10px; border-radius: 8px; border: none; outline: none; }
+  button { background: #00e0ff; color: #000; font-weight: bold; cursor: pointer; padding: 12px; border-radius: 10px; border: none; transition: 0.3s; }
+  button:hover { background: #00c0cc; }
+  .result { margin-top: 20px; background: #161630; padding: 15px; border-radius: 10px; }
+  pre { background: #0f0f1f; padding: 10px; border-radius: 8px; overflow-x: auto; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="lang-switch">
-      <button onclick="switchLanguage()">🇫🇷 / 🇸🇦</button>
-    </div>
 
-<center>
+<h1>محول الأنظمة العددية المتقدم</h1>
+<div class="container">
+  <label>أدخل الرقم:</label>
+  <input type="text" id="inputNumber" placeholder="مثال: 2026">
 
-    <div class="logo-container">
-      <img src="Logo_of_the_Bank_of_Algeria.png" alt="Logo" class="logo">
-    </div>
+  <label>اختر نظام الرقم الأصلي:</label>
+  <select id="inputBase">
+    <option value="10">Decimal (عشري)</option>
+    <option value="2">Binary (ثنائي)</option>
+    <option value="8">Octal (ثماني)</option>
+    <option value="16">Hexadecimal (سداسي عشر)</option>
+  </select>
 
-    <h2 id="title">Tableau de Paiement des Frais de Change</h2>
+  <label>اختر النظام المراد التحويل إليه:</label>
+  <select id="outputBase">
+    <option value="2">Binary (ثنائي)</option>
+    <option value="8">Octal (ثماني)</option>
+    <option value="10">Decimal (عشري)</option>
+    <option value="16">Hexadecimal (سداسي عشر)</option>
+  </select>
 
-    <label id="labelStart">Date de début:</label>
-    <input type="date" id="startDate">
+  <button onclick="convert()">حوّل الآن</button>
 
-    <label id="labelEnd">Date de fin:</label>
-    <input type="date" id="endDate">
+  <div class="result" id="result"></div>
+</div>
 
-    <label id="labelDays">Nombre de jours ouvrables:</label>
-    <input type="number" id="workingDays" min="1" max="90" value="3">
+<script>
+function convert() {
+  const numStr = document.getElementById('inputNumber').value.trim();
+  const inputBase = parseInt(document.getElementById('inputBase').value);
+  const outputBase = parseInt(document.getElementById('outputBase').value);
+  const resultDiv = document.getElementById('result');
 
-    <div class="warning" id="warningText">💡 Valeur recommandée par la banque: 3</div>
-
-    <div class="button-row">
-      <button onclick="generateTable()" id="btnGenerate">Générer</button>
-      <button onclick="clearTable()" id="btnClear">Vider</button>
-      <button onclick="printPage()" id="btnPrint">Imprimer</button>
-    </div>
-
-</center>
-
-    <label id="labelNote">Remarques:</label>
-    <textarea id="customNote" rows="3" placeholder="..."></textarea>
-
-    <table id="resultTable">
-      <thead>
-        <tr>
-          <th>Date de paiement</th>
-          <th>Date de voyage 1</th>
-          <th>Date de voyage 2</th>
-          <th>Date de voyage 3</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-
-    <button id="backToTop" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">⬆️</button>
-
-
-  <script>
-	
-    const labels = {
-      fr: {
-        title: "Tableau de Paiement des Frais de Change",
-        labelStart: "Date de début:",
-        labelEnd: "Date de fin:",
-        labelDays: "Nombre de jours ouvrables:",
-        labelNote: "Remarques:",
-        warning: "💡 Valeur recommandée par la banque: 3",
-        headers: ["Date de paiement", "Date de voyage 1", "Date de voyage 2", "Date de voyage 3"],
-        buttons: { generate: "Générer", clear: "Vider", print: "Imprimer" }
-      },
-      ar: {
-        title: "جدول لتسديد حق الصرف",
-        labelStart: "تاريخ البدء:",
-        labelEnd: "تاريخ الانتهاء:",
-        labelDays: "عدد أيام العمل:",
-        labelNote: "ملاحظات:",
-        warning: "💡 القيمة الموصى بها من البنك: 3",
-        headers: ["تاريخ الدفع", "تاريخ السفر 1", "تاريخ السفر 2", "تاريخ السفر 3"],
-        buttons: { generate: "توليد", clear: "تفريغ", print: "طباعة" }
-      }
-    };
-
-    let currentLang = 'fr';
-
-window.onload = function () {
-  const today = new Date();
-  const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-  const nextMonthEnd = new Date(today.getFullYear(), today.getMonth() + 2, 0);
-
-  const formatDate = (d) => d.toISOString().split('T')[0];
-
-  document.getElementById("startDate").value = formatDate(nextMonthStart);
-  document.getElementById("endDate").value = formatDate(nextMonthEnd);
-
-  // --- هنا كود تغيير اللون حسب القيمة ---
-  const workingDaysInput = document.getElementById("workingDays");
-
-  function updateWorkingDaysColor() {
-    if (parseInt(workingDaysInput.value) === 3) {
-      workingDaysInput.style.backgroundColor = "#c8e6c9"; // أخضر فاتح
-    } else {
-      workingDaysInput.style.backgroundColor = "#ffcdd2"; // أحمر فاتح
-    }
+  if(!numStr){
+    alert('أدخل الرقم أولاً!');
+    return;
   }
 
-  workingDaysInput.addEventListener("input", updateWorkingDaysColor);
-  updateWorkingDaysColor();
-};
+  // تحويل الرقم إلى عشري أولاً
+  let decimal;
+  try {
+    decimal = parseInt(numStr, inputBase);
+    if(isNaN(decimal)) throw 'خطأ';
+  } catch {
+    alert('الرقم غير صالح للنظام المختار!');
+    return;
+  }
 
-	
-    function switchLanguage() {
-      currentLang = currentLang === 'fr' ? 'ar' : 'fr';
-      document.getElementById("title").innerText = labels[currentLang].title;
-      document.getElementById("labelStart").innerText = labels[currentLang].labelStart;
-      document.getElementById("labelEnd").innerText = labels[currentLang].labelEnd;
-      document.getElementById("labelDays").innerText = labels[currentLang].labelDays;
-      document.getElementById("warningText").innerText = labels[currentLang].warning;
-      document.getElementById("labelNote").innerText = labels[currentLang].labelNote;
+  // تحويل الرقم إلى النظام المطلوب
+  let output = decimal.toString(outputBase).toUpperCase();
 
-      const headerCells = document.querySelectorAll("#resultTable thead tr th");
-      labels[currentLang].headers.forEach((text, i) => {
-        headerCells[i].innerText = text;
-      });
-
-      document.getElementById("btnGenerate").innerText = labels[currentLang].buttons.generate;
-      document.getElementById("btnClear").innerText = labels[currentLang].buttons.clear;
-      document.getElementById("btnPrint").innerText = labels[currentLang].buttons.print;
-
-      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-      document.documentElement.lang = currentLang;
+  // توليد خطوات الشرح
+  let steps = [];
+  if(outputBase !== 10){ // القسمة على الأساس
+    let temp = decimal;
+    while(temp > 0){
+      let remainder = temp % outputBase;
+      let remDisplay = remainder > 9 ? String.fromCharCode(55+remainder) : remainder;
+      steps.push(`${temp} ÷ ${outputBase} = ${Math.floor(temp/outputBase)} الباقي = ${remDisplay}`);
+      temp = Math.floor(temp/outputBase);
     }
+    steps = steps.reverse();
+  } else { // إذا التحويل إلى Decimal، التوسيع حسب القوى
+    let digits = numStr.split('').reverse();
+    let sumSteps = digits.map((d,i) => {
+      let val = parseInt(d, inputBase);
+      return `${val} × ${inputBase}^${i} = ${val*Math.pow(inputBase,i)}`;
+    });
+    steps = sumSteps;
+  }
 
-    function isWorkingDay(date) {
-      const day = date.getDay();
-      return day !== 5 && day !== 6;
-    }
+  resultDiv.innerHTML = `
+    <b>النتيجة:</b> ${output}<br><br>
+    <b>خطوات التحويل:</b>
+    <pre>${steps.join('\n')}</pre>
+  `;
+}
+</script>
 
-    function addWorkingDays(start, days) {
-      let result = new Date(start);
-      let added = 0;
-      while (added < days) {
-        result.setDate(result.getDate() + 1);
-        if (isWorkingDay(result)) {
-          added++;
-        }
-      }
-      return result;
-    }
-
-    function formatDateLocalized(date) {
-      if (currentLang === 'ar') {
-        const jours = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
-        const mois = ["جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان", "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
-        return `${jours[date.getDay()]}، ${date.getDate()} ${mois[date.getMonth()]} ${date.getFullYear()}`;
-      } else {
-        const jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-        const mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-        return `${jours[date.getDay()]}, ${date.getDate()} ${mois[date.getMonth()]} ${date.getFullYear()}`;
-      }
-    }
-
-    function generateTable() {
-      const start = new Date(document.getElementById("startDate").value);
-      const end = new Date(document.getElementById("endDate").value);
-      const days = parseInt(document.getElementById("workingDays").value);
-      const tbody = document.querySelector("#resultTable tbody");
-      tbody.innerHTML = "";
-
-      if (isNaN(start) || isNaN(end) || days < 1 || days > 90) {
-        alert(currentLang === 'fr' ? "Veuillez entrer des données valides." : "يرجى إدخال بيانات صالحة.");
-        return;
-      }
-
-      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-        const current = new Date(d);
-        if (isWorkingDay(current)) {
-          const voyage1 = addWorkingDays(current, days);
-          const row = document.createElement("tr");
-
-          [current, voyage1, new Date(voyage1.getTime() + 86400000), new Date(voyage1.getTime() + 2 * 86400000)]
-            .forEach(date => {
-              const td = document.createElement("td");
-              td.innerText = formatDateLocalized(date);
-              row.appendChild(td);
-            });
-
-          tbody.appendChild(row);
-        }
-      }
-        // ⬇️ هذا هو السطر الذي يضيف التمرير إلى الجدول
-  document.getElementById("resultTable").scrollIntoView({ behavior: "smooth" });
-
-    }
-
-    function clearTable() {
-      document.querySelector("#resultTable tbody").innerHTML = "";
-    }
-
-    function printPage() {
-      if (document.querySelector("#resultTable tbody").children.length === 0) {
-        alert(currentLang === 'fr' ? "Aucun tableau à imprimer." : "لا يوجد جدول للطباعة.");
-        return;
-      }
-      alert(
-        currentLang === 'fr'
-          ? "ℹ️ Pour une impression propre, désactivez l’option 'En-têtes et pieds de page' dans la fenêtre d'impression."
-          : "ℹ️ لتفادي ظهور الرابط أسفل الورقة، قم بإلغاء خيار 'رؤوس وتذييلات الصفحة' من إعدادات الطابعة."
-      );
-      window.print();
-    }
-    
-  </script>
 </body>
 </html>
