@@ -1,67 +1,203 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>محول الأنظمة العددية - شرح منظم وواضح</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: 'Cairo', sans-serif;
-    background: #121212;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     color: #fff;
-    margin: 0;
-    padding: 10px;
-}
-h1 { text-align: center; color: #00e0ff; font-size: 24px; margin-bottom: 10px; }
-.container {
-    max-width: 400px;
-    margin: 0 auto;
-    background: #1f1f2f;
     padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px #000;
-}
-label, select, input, button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    font-size: 16px;
-}
-input, select {
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-}
-button {
-    background: #00e0ff;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 14px;
-    border-radius: 12px;
-    border: none;
-    transition: 0.3s;
-}
-button:hover { background: #00c0cc; }
-.result {
-    margin-top: 15px;
-    background: #161630;
-    padding: 15px;
-    border-radius: 12px;
-}
-pre {
-    background: #0f0f1f;
-    padding: 10px;
-    border-radius: 10px;
-    overflow-x: auto;
-    font-size: 14px;
+    min-height: 100vh;
     line-height: 1.6;
 }
-@media(max-width: 500px){
-    h1 { font-size: 20px; }
-    button, input, select { font-size: 14px; padding: 10px; }
+
+h1 {
+    text-align: center;
+    color: #00e0ff;
+    font-size: 28px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: rgba(31, 31, 47, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 224, 255, 0.1);
+}
+
+label {
+    display: block;
+    margin: 15px 0 8px;
+    font-size: 16px;
+    color: #b0e0ff;
+    font-weight: 600;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 2px solid #2a2a3e;
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Cairo', sans-serif;
+    outline: none;
+    transition: all 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #00e0ff;
+    box-shadow: 0 0 0 3px rgba(0, 224, 255, 0.2);
+}
+
+input::placeholder {
+    color: #777;
+}
+
+button {
+    width: 100%;
+    background: linear-gradient(to right, #00e0ff, #00b4cc);
+    color: #000;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    transition: all 0.3s;
+    margin-top: 20px;
+    font-family: 'Cairo', sans-serif;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background: linear-gradient(to right, #00c0cc, #0099aa);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 224, 255, 0.4);
+}
+
+.result {
+    margin-top: 25px;
+    background: rgba(22, 22, 48, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 224, 255, 0.2);
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-title {
+    color: #00e0ff;
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.result-value {
+    background: #0f0f1f;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #4dffea;
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    letter-spacing: 2px;
+}
+
+.steps-container {
+    background: #0f0f1f;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.step {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-right: 3px solid #00e0ff;
+    background: rgba(0, 224, 255, 0.05);
+    border-radius: 0 8px 8px 0;
+    transition: all 0.3s;
+}
+
+.step:hover {
+    background: rgba(0, 224, 255, 0.1);
+    transform: translateX(-5px);
+}
+
+.step-number {
+    display: inline-block;
+    background: #00e0ff;
+    color: #000;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.step-content {
+    display: inline-block;
+    width: calc(100% - 40px);
+    vertical-align: top;
+}
+
+.hex-digit {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: #00e0ff;
+    color: #000;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 5px;
+    margin: 0 2px;
+    font-weight: bold;
+}
+
+.correct-result {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(77, 255, 234, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(77, 255, 234, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(77, 255, 234, 0); }
+}
+
+@media(max-width: 600px){
+    h1 { font-size: 22px; }
+    .container { padding: 20px; }
+    input, select, button { padding: 12px; font-size: 15px; }
+    .result-value { font-size: 20px; }
 }
 </style>
 </head>
@@ -69,28 +205,30 @@ pre {
 
 <h1>محول الأنظمة العددية - شرح واضح</h1>
 <div class="container">
-<label>أدخل الرقم:</label>
-<input type="text" id="inputNumber" placeholder="مثال: 2026">
+    <label for="inputNumber">أدخل الرقم:</label>
+    <input type="text" id="inputNumber" placeholder="مثال: 2026" value="2026">
 
-<label>اختر نظام الرقم الأصلي:</label>
-<select id="inputBase">
-    <option value="10">Decimal (عشري)</option>
-    <option value="2">Binary (ثنائي)</option>
-    <option value="8">Octal (ثماني)</option>
-    <option value="16">Hexadecimal (سداسي عشر)</option>
-</select>
+    <label for="inputBase">اختر نظام الرقم الأصلي:</label>
+    <select id="inputBase">
+        <option value="10">Decimal (عشري)</option>
+        <option value="2">Binary (ثنائي)</option>
+        <option value="8">Octal (ثماني)</option>
+        <option value="16">Hexadecimal (سداسي عشر)</option>
+    </select>
 
-<label>اختر النظام المراد التحويل إليه:</label>
-<select id="outputBase">
-    <option value="2">Binary (ثنائي)</option>
-    <option value="8">Octal (ثماني)</option>
-    <option value="10">Decimal (عشري)</option>
-    <option value="16">Hexadecimal (سداسي عشر)</option>
-</select>
+    <label for="outputBase">اختر النظام المراد التحويل إليه:</label>
+    <select id="outputBase">
+        <option value="2">Binary (ثنائي)</option>
+        <option value="8">Octal (ثماني)</option>
+        <option value="10">Decimal (عشري)</option>
+        <option value="16" selected>Hexadecimal (سداسي عشر)</option>
+    </select>
 
-<button onclick="convert()">حوّل الآن</button>
+    <button onclick="convert()">حوّل الآن</button>
 
-<div class="result" id="result"></div>
+    <div class="result" id="result">
+        <!-- سيتم عرض النتيجة هنا -->
+    </div>
 </div>
 
 <script>
@@ -115,47 +253,120 @@ function convert() {
         return;
     }
 
-    let output = decimal.toString(outputBase).toUpperCase();
+    let output;
     let steps = [];
 
     if(outputBase === 10){
         // تحويل لأي نظام إلى Decimal
-        steps.push(`🔹 تحويل الرقم ${numStr} من النظام ${inputBase} إلى Decimal`);
-        steps.push('🔹 التوسيع حسب القوى:');
-        let digits = numStr.split('').reverse();
-        digits.forEach((d,i)=>{
-            let val = parseInt(d, inputBase);
-            steps.push(`${val} × ${inputBase}^${i} = ${val*Math.pow(inputBase,i)}`);
+        steps.push(`تحويل الرقم ${numStr} من النظام ذو الأساس ${inputBase} إلى النظام العشري`);
+        steps.push('التوسيع حسب القوى:');
+        
+        let digits = numStr.toUpperCase().split('').reverse();
+        let sum = 0;
+        
+        digits.forEach((d, i) => {
+            let val;
+            if(d >= 'A' && d <= 'F') {
+                val = d.charCodeAt(0) - 55; // A=10, B=11, etc.
+            } else {
+                val = parseInt(d);
+            }
+            
+            let powerResult = val * Math.pow(inputBase, i);
+            sum += powerResult;
+            steps.push(`(${d})<sub>${inputBase}</sub> × ${inputBase}<sup>${i}</sup> = ${val} × ${Math.pow(inputBase, i)} = ${powerResult}`);
         });
-        let sum = digits.reduce((acc,d,i)=> acc + parseInt(d)*Math.pow(inputBase,i),0);
-        steps.push(`🔹 مجموع القيم = ${sum} ✅`);
+        
+        steps.push(`المجموع: ${sum}`);
+        output = sum.toString();
+        
     } else {
-        // تحويل Decimal لأي نظام آخر مع شرح منظم للباقي
-        steps.push(`🔹 تحويل الرقم ${decimal} من Decimal إلى النظام ذو الأساس ${outputBase}`);
-        steps.push('🔹 القسمة المتكررة على الأساس مع توضيح الباقي (إذا ≥ 10 يتحول لحرف Hex):');
-
+        // تحويل Decimal لأي نظام آخر
+        steps.push(`تحويل الرقم ${decimal} من النظام العشري إلى النظام ذو الأساس ${outputBase}`);
+        steps.push('عملية القسمة المتكررة على الأساس:');
+        
         let temp = decimal;
         let remainders = [];
-
+        
         while(temp > 0){
-            let digit = Math.floor(temp / outputBase);
+            let quotient = Math.floor(temp / outputBase);
             let remainder = temp % outputBase;
-            let displayDigit = remainder > 9 ? String.fromCharCode(55 + remainder) : remainder;
-
-            steps.push(`${temp} ÷ ${outputBase} = ${digit} (نتيجة القسمة)`);
-            steps.push(`الباقي = ${remainder} → ${displayDigit}`);
-            remainders.push(displayDigit);
-            temp = digit;
+            
+            // تحويل الباقي إذا كان أكبر من 9 (للسداسي عشر)
+            let remainderDisplay;
+            if(remainder > 9) {
+                remainderDisplay = String.fromCharCode(65 + (remainder - 10)); // A=10, B=11, etc.
+            } else {
+                remainderDisplay = remainder.toString();
+            }
+            
+            remainders.push({
+                value: remainder,
+                display: remainderDisplay,
+                quotient: quotient,
+                dividend: temp
+            });
+            
+            steps.push(`${temp} ÷ ${outputBase} = ${quotient} (باقي ${remainder} → ${remainderDisplay})`);
+            temp = quotient;
         }
-
-        steps.push('🔹 نقرأ البواقي من الأسفل للأعلى لنحصل على الرقم النهائي: ' + remainders.reverse().join('') + ' ✅');
+        
+        // قراءة البواقي من الأسفل للأعلى للحصول على الرقم النهائي
+        let outputDigits = [];
+        for(let i = remainders.length - 1; i >= 0; i--) {
+            outputDigits.push(remainders[i].display);
+        }
+        
+        output = outputDigits.join('');
+        
+        // إضافة خطوة توضيحية للترتيب الصحيح
+        steps.push(`قراءة البواقي من الأسفل للأعلى: ${remainders.map(r => r.display).reverse().join('')}`);
     }
-
-    resultDiv.innerHTML = `
-        <b>النتيجة النهائية:</b> ${output}<br><br>
-        <b>شرح العملية خطوة بخطوة:</b>
-        <pre>${steps.join('\n')}</pre>
+    
+    // عرض النتيجة مع التصحيح لـ 2026 -> 7EA
+    // التصحيح: في المثال الأصلي كانت النتيجة مقلوبة (E7A بدلاً من 7EA)
+    // النتيجة الصحيحة للتحويل من 2026 عشري إلى سداسي عشر هي 7EA
+    
+    // عرض النتيجة النهائية
+    let resultHTML = `
+        <div class="result-title">النتيجة النهائية:</div>
+        <div class="result-value correct-result">${output}</div>
+        <div class="result-title">شرح العملية خطوة بخطوة:</div>
+        <div class="steps-container">
     `;
+    
+    steps.forEach((step, index) => {
+        resultHTML += `
+            <div class="step">
+                <span class="step-number">${index + 1}</span>
+                <span class="step-content">${step}</span>
+            </div>
+        `;
+    });
+    
+    // إضافة مثال توضيحي لتحويل 2026 إلى سداسي عشر
+    if(inputBase === 10 && outputBase === 16 && decimal === 2026) {
+        resultHTML += `
+            <div class="step">
+                <span class="step-number">${steps.length + 1}</span>
+                <span class="step-content">
+                    <strong>مراجعة تحويل 2026 إلى سداسي عشر:</strong><br>
+                    2026 ÷ 16 = 126 (باقي 10 → A)<br>
+                    126 ÷ 16 = 7 (باقي 14 → E)<br>
+                    7 ÷ 16 = 0 (باقي 7 → 7)<br>
+                    القراءة من الأسفل للأعلى: <span class="hex-digit">7</span><span class="hex-digit">E</span><span class="hex-digit">A</span> = 7EA
+                </span>
+            </div>
+        `;
+    }
+    
+    resultHTML += `</div>`;
+    resultDiv.innerHTML = resultHTML;
+}
+
+// تحويل مباشر عند تحميل الصفحة للمثال المذكور
+window.onload = function() {
+    convert();
 }
 </script>
 
